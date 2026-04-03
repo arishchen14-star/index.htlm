@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Secret Access 💻</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: monospace;
+    background: black;
+    color: #00ffcc;
+    overflow: hidden;
+}
+
+/* Terminal */
+#terminal {
+    padding: 20px;
+    white-space: pre-line;
+}
+
+/* Pages */
+.page {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(15px);
+    padding: 25px;
+    border-radius: 20px;
+    text-align: center;
+    color: white;
+    width: 80%;
+    max-width: 350px;
+    opacity: 0;
+    transition: 0.5s;
+}
+
+.page.show {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/* Buttons */
+button {
+    margin: 8px;
+    padding: 10px 15px;
+    border: none;
+    background: pink;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* Neon */
+h1 {
+    text-shadow: 0 0 10px pink, 0 0 20px red;
+}
+
+/* Hearts */
+.heart {
+    position: absolute;
+    color: red;
+    animation: float 5s linear infinite;
+}
+
+@keyframes float {
+    from { transform: translateY(100vh); }
+    to { transform: translateY(-10vh); }
+}
+
+/* Fireworks */
+.firework {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: white;
+    border-radius: 50%;
+    animation: explode 1.2s ease-out forwards;
+}
+
+@keyframes explode {
+    to {
+        transform: translate(var(--x), var(--y));
+        opacity: 0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div id="terminal"></div>
+
+<!-- PAGE 1 -->
+<div id="page1" class="page">
+    <h1>🎂 Happy Birthday Didi 😎</h1>
+    <p>System Alert: Age +1 detected 📈</p>
+    <button onclick="nextPage(2)">Continue ▶</button>
+</div>
+
+<!-- PAGE 2 FUNNY -->
+<div id="page2" class="page">
+    <h1>😂 System Message</h1>
+    <p>
+        Gift? ❌<br>
+        Respect? ❌<br>
+        Chota Bhai? ✅ ALWAYS 😈
+    </p>
+
+    <button onclick="alert('Error 404: Gift not found 😂')">Get Gift 🎁</button>
+    <button onclick="nextPage(3)">Ignore & Continue</button>
+</div>
+
+<!-- PAGE 3 CODER -->
+<div id="page3" class="page">
+    <h1>💻 Dev Mode</h1>
+    <p>
+        if (didi == awesome) {<br>
+        &nbsp;&nbsp;return "BEST SISTER 💖";<br>
+        }<br><br>
+        Status: TRUE ✅
+    </p>
+
+    <button onclick="nextPage(4)">Next</button>
+</div>
+
+<!-- PAGE 4 EMOTIONAL -->
+<div id="page4" class="page">
+    <h1>💖 Real Talk</h1>
+    <p>
+        Thoda irritate karta hu 😅<br><br>
+        But sach me…<br>
+        Tu meri strength hai 💕<br>
+        Hamesha mere saath rehti hai 💫
+    </p>
+
+    <button onclick="nextPage(5)">Final 🚀</button>
+</div>
+
+<!-- PAGE 5 FINAL -->
+<div id="page5" class="page">
+    <h1>🙏 Jai Shree Ram Didi 🎂</h1>
+
+    <p>
+        Yoooo Happy Birthdayyyy 🎉😎<br><br>
+        Aap hamesha khush raho 💖<br>
+        Smile karti raho 😊<br><br>
+
+        Aur haan…<br>
+        Gift abhi bhi nahi milega 😂🎁❌<br><br>
+
+        — From your chota bhai 😈
+    </p>
+</div>
+
+<script>
+const lines = [
+"Booting Birthday.exe...",
+"Scanning Didi...",
+"Loading Memories...",
+"Injecting Fun + Emotion...",
+"🎉 ACCESS GRANTED 🎉"
+];
+
+let i = 0;
+
+function type() {
+    if (i < lines.length) {
+        document.getElementById("terminal").innerHTML += lines[i] + "\\n";
+        i++;
+        setTimeout(type, 800);
+    } else {
+        setTimeout(() => {
+            document.getElementById("terminal").style.display = "none";
+            showPage(1);
+        }, 1000);
+    }
+}
+
+function showPage(num) {
+    document.querySelectorAll(".page").forEach(p => {
+        p.classList.remove("show");
+        p.style.display = "none";
+    });
+
+    const page = document.getElementById("page"+num);
+    page.style.display = "block";
+
+    setTimeout(() => {
+        page.classList.add("show");
+
+        // AUTO FIREWORKS ON FINAL PAGE
+        if (num === 5) {
+            setInterval(fireworks, 800);
+        }
+
+    }, 50);
+}
+
+function nextPage(num) {
+    showPage(num);
+}
+
+/* Hearts */
+setInterval(() => {
+    const h = document.createElement("div");
+    h.className = "heart";
+    h.innerHTML = "💖";
+    h.style.left = Math.random()*100+"vw";
+    document.body.appendChild(h);
+
+    setTimeout(()=>h.remove(),5000);
+},300);
+
+/* Fireworks */
+function fireworks() {
+    for (let i = 0; i < 80; i++) {
+        const f = document.createElement("div");
+        f.className = "firework";
+
+        f.style.left = "50%";
+        f.style.top = "50%";
+
+        f.style.setProperty('--x', (Math.random()*400-200)+"px");
+        f.style.setProperty('--y', (Math.random()*400-200)+"px");
+
+        document.body.appendChild(f);
+
+        setTimeout(()=>f.remove(),1200);
+    }
+}
+
+type();
+</script>
+
+</body>
+</html>
